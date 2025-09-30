@@ -33,3 +33,11 @@ def list_user_files(user_id: str):
     except Exception as e:
         return {"error": str(e)}    
 
+def delete_user_file(user_id: str, filename: str):
+    """Delete file from Supabase storage"""
+    path = f"{user_id}/{filename}"
+    try:
+        result = supabase.storage.from_(BUCKET_NAME).remove([path])
+        return {"message": "File deleted from storage"}
+    except Exception as e:
+        return {"error": str(e)}
