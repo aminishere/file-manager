@@ -1,3 +1,42 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Coverage and testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checker / linters caches
+.mypy_cache/
+.ruff_cache/
+
+# Environments and secrets
+.env
+.env.*
+.python-version
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Misc
+.DS_Store
+logs/
+.cache/
