@@ -21,33 +21,20 @@ def get_db():
 
 # ---------------- PASSWORD UTILITIES ----------------
 
-def truncate_bcrypt(password: str, limit: int = 72) -> str:
-    encoded = password.encode("utf-8")
-    if len(encoded) <= limit:
-        return password
-    # truncate without breaking multi-byte char
-    truncated = encoded[:limit]
-    while True:
-        try:
-            return truncated.decode("utf-8")
-        except UnicodeDecodeError:
-            truncated = truncated[:-1]
-
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def get_password_hash(password: str) -> str:
-    safe_pass = truncate_bcrypt(password)
-    return pwd_context.hash(safe_pass)
+    """Hash a password using bcrypt."""
+    return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    safe_pass = truncate_bcrypt(plain_password)
-    return pwd_context.verify(safe_pass, hashed_password)
+    """Verify a plaintext password against the hashed version."""
+    return pwd_context.verify(plain_password, hashed_password)
 
 # ---------------- ROUTES ----------------
 
 @app.post("/signup")
 def signup(user: UserCreate, db: Session = Depends(get_db)):
-    if len(user.password.encode("utf-8")) > 72:
-        raise HTTPException(status_code=400, detail="Password too long (max 72 bytes)")
 
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user:
