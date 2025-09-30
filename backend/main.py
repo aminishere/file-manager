@@ -1,5 +1,5 @@
 # main.py
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, Query
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 
@@ -8,7 +8,10 @@ from models import User
 from schemas import UserCreate, UserLogin
 
 #jwt imports
-from auth import create_access_token, get_current_user
+from auth import create_access_token, get_current_user , verify_token
+
+#supabse imports
+from supabase_files import upload_user_file, get_user_file_url, list_user_files
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -68,3 +71,15 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 @app.get("/protected")
 def protected_route(current_user: str = Depends(get_current_user)):
     return {"msg": f"Hello {current_user}, you are authorized!"}
+
+
+@app.post("/upload")
+async def upload(file: UploadFile, user = Depends(verify_token)):
+    content = await file.read()
+    result = upload_user_file(user["sub"], file.filename, content)
+    return result
+
+@app.get("/getfiles")
+async def list_files(user=Depends(verify_token)):
+    return list_user_files(user["sub"])
+

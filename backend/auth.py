@@ -2,8 +2,8 @@ from datetime import datetime, timedelta,timezone
 from jose import jwt, JWTError
 
 #protected routes
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends, HTTPException,status
+from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
 
 
 
@@ -35,3 +35,14 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     if payload is None or "sub" not in payload:
         raise HTTPException(status_code=401, detail="Invalid token")
     return payload
+
+#supabse
+security = HTTPBearer()
+
+def verify_token(credentials: HTTPAuthorizationCredentials= Depends(security)):
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token")
