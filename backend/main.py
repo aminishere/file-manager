@@ -7,6 +7,10 @@ from database import SessionLocal, init_db
 from models import User
 from schemas import UserCreate, UserLogin
 
+#jwt imports
+from auth import create_access_token, get_current_user
+
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app = FastAPI()
 
@@ -56,4 +60,11 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if not verify_password(user.password, db_user.hash_password):
         raise HTTPException(status_code=400, detail="Wrong password")
 
-    return {"msg": "Login successful", "user": {"email": db_user.email, "name": db_user.name}}
+    #create jwtt tokenn
+    access_token = create_access_token(data={"sub": db_user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@app.get("/protected")
+def protected_route(current_user: str = Depends(get_current_user)):
+    return {"msg": f"Hello {current_user}, you are authorized!"}
