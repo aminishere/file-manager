@@ -1,33 +1,72 @@
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import declarative_base, sessionmaker
+# main.py
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
-# 1
-engine = create_engine("postgresql+psycopg2://amin:amin123@localhost/sample2")
+from database import SessionLocal, init_db
+from models import User
+from schemas import UserCreate, UserLogin
 
-# 2
-Base = declarative_base()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+app = FastAPI()
 
-# 3
-class User(Base):
-    __tablename__ = 'users'   # table name
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50))
-    age = Column(Integer)
+init_db()
 
-# 4
-Base.metadata.create_all(engine)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-# 5
-Session = sessionmaker(bind=engine)
-session = Session()
+# ---------------- PASSWORD UTILITIES ----------------
 
-# 6
-session.add(User(name="Alice", age=25))
-session.commit()
+def truncate_bcrypt(password: str, limit: int = 72) -> str:
+    encoded = password.encode("utf-8")
+    if len(encoded) <= limit:
+        return password
+    # truncate without breaking multi-byte char
+    truncated = encoded[:limit]
+    while True:
+        try:
+            return truncated.decode("utf-8")
+        except UnicodeDecodeError:
+            truncated = truncated[:-1]
 
-# 7
-for user in session.query(User).all():
-    print(user.id, user.name, user.age)
 
-# 8
-session.close()
+def get_password_hash(password: str) -> str:
+    safe_pass = truncate_bcrypt(password)
+    return pwd_context.hash(safe_pass)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    safe_pass = truncate_bcrypt(plain_password)
+    return pwd_context.verify(safe_pass, hashed_password)
+
+# ---------------- ROUTES ----------------
+
+@app.post("/signup")
+def signup(user: UserCreate, db: Session = Depends(get_db)):
+    if len(user.password.encode("utf-8")) > 72:
+        raise HTTPException(status_code=400, detail="Password too long (max 72 bytes)")
+
+    db_user = db.query(User).filter(User.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    hashed_password = get_password_hash(user.password)
+    new_user = User(email=user.email, name=user.name, hash_password=hashed_password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return {"message": "User created successfully", "user": {"email": new_user.email, "name": new_user.name}}
+
+@app.post("/login")
+def login(user: UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not found")
+
+    if not verify_password(user.password, db_user.hash_password):
+        raise HTTPException(status_code=400, detail="Wrong password")
+
+    return {"msg": "Login successful", "user": {"email": db_user.email, "name": db_user.name}}
