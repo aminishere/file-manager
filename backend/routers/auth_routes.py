@@ -33,7 +33,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if not verify_password(user.password, db_user.hash_password):
         raise HTTPException(status_code=400, detail="Wrong password")
 
-    access_token = create_access_token(data={"sub": db_user.email})
+    access_token = create_access_token(data={"sub": str(db_user.id)})
     return {"access_token": access_token, "token_type": "bearer"}
 
 
