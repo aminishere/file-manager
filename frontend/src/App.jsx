@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
       <main className="max-w-5xl mx-auto p-4">
         <Routes>
-          <Route path="/" element={<div className="min-h-[70vh] flex items-center justify-center text-white text-lg">Welcome</div>} />
+          <Route path="/" element={<Auth initialMode="login" onAuth={() => setIsAuthed(true)} />} />
           <Route path="/login" element={<Auth initialMode="login" onAuth={() => setIsAuthed(true)} />} />
           <Route path="/signup" element={<Auth initialMode="register" onAuth={() => setIsAuthed(true)} />} />
           <Route path="/files" element={<PrivateRoute><Files /></PrivateRoute>} />

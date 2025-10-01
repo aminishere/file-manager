@@ -4,6 +4,7 @@ import { login, register } from '../services/sessionService'
 
 export default function Auth({ initialMode = 'login', onAuth }) {
   const [mode, setMode] = useState(initialMode)
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -17,7 +18,7 @@ export default function Auth({ initialMode = 'login', onAuth }) {
         const data = await login({ email, password })
         onAuth?.(data)
       } else {
-        await register({ email, password })
+        await register({ email, password, name })
         const data = await login({ email, password })
         onAuth?.(data)
       }
@@ -32,6 +33,9 @@ export default function Auth({ initialMode = 'login', onAuth }) {
       <div className="w-full max-w-sm mx-auto bg-white/5 border border-white/10 rounded-lg shadow p-6">
         <h3 className="text-white font-semibold mb-4">{mode === 'login' ? 'Sign in' : 'Create account'}</h3>
         <form onSubmit={handleSubmit} className="grid gap-3">
+          {mode === 'register' && (
+            <input className="border border-white/10 rounded px-3 py-2 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-400" type="text" placeholder="Name" value={name} onChange={e=>setName(e.target.value)} />
+          )}
           <input className="border border-white/10 rounded px-3 py-2 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-400" type="email" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
           <input className="border border-white/10 rounded px-3 py-2 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-400" type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} />
           {error && <div className="text-sm text-red-400">{error}</div>}
