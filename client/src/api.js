@@ -23,7 +23,7 @@ export async function apiRequest(path, {method = 'GET', body , isForm=false}= {}
     }
     const contentType = response.headers.get('content-type') || '' ;
     if(contentType.includes('application/json')){
-        returnresponse.json();
+        return response.json();
     }
     return response.text();
 
@@ -35,8 +35,22 @@ export const authApi = {
     signup : (data) =>apiRequest('/signup', {method : ' POST' , body : data}),
     logout : () => localStorage.removeItem('token'),
     login : async (data) => {
-        const res= await apiRequest('login', {method : 'POST', body: data});
+        const res= await apiRequest('/login', {method : 'POST', body: data});
         if(res?.access_token) localStorage.setItem('token', res.access_token);
         return res;
     }
 };
+
+
+export const filesApi ={
+    upload : ({file, text}) => {
+        const form = new FormData();
+        form.append('file', file);
+        form.append('text', text);
+        return apiRequest('/upload', {method : 'POST', body: form , isForm: true});
+    },
+    list : () =>apiRequest('/files', {method : 'GET'}),
+    get : (id) => apiRequest(`/files/${id}`, {method : 'GET'}),
+    updateText : (id, new_text) => apiRequest(`/files${id}`, {method :'PUT', body :{new_text}}),
+    remove : (id) => apiRequest(`/files${id}` , { method : 'DELETE'}), 
+}
