@@ -1,18 +1,21 @@
-import react from 'react'
+import React, { useState } from 'react'
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import Auth from './pages/Auth';
 
-
-function App() {
-
-
+const App = () => {
+  const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('token'))
   return (
     <>
-   <div className="flex justify-center items-center h-screen bg-blue-100">
-      <h1 className="text-4xl font-bold text-red-500">Tailwind is working!</h1>
-    </div>
+    <BrowserRouter>
+    <main >
+      <Routes>
+        <Route path='/'      element = {<Auth initialMode='login' onAuth={() => setIsAuthed(true)} />}/>
+        <Route path='/login' element = {<Auth initialMode='login' onAuth={() => setIsAuthed(true)} />}/>
+      </Routes>
+    </main>
+    </BrowserRouter>
     </>
   )
 }
 
 export default App
-
-
