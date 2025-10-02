@@ -32,7 +32,7 @@ export async function apiRequest(path, {method = 'GET', body , isForm=false}= {}
 
 //object
 export const authApi = {
-    signup : (data) =>apiRequest('/signup', {method : ' POST' , body : data}),
+    signup : (data) =>apiRequest('/signup', {method : 'POST' , body : data}),
     logout : () => localStorage.removeItem('token'),
     login : async (data) => {
         const res= await apiRequest('/login', {method : 'POST', body: data});
@@ -51,6 +51,6 @@ export const filesApi ={
     },
     list : () =>apiRequest('/files', {method : 'GET'}),
     get : (id) => apiRequest(`/files/${id}`, {method : 'GET'}),
-    updateText : (id, new_text) => apiRequest(`/files${id}`, {method :'PUT', body :{new_text}}),
-    remove : (id) => apiRequest(`/files${id}` , { method : 'DELETE'}), 
+    updateText : (id, new_text) => apiRequest(`/files/${id}`, {method :'PUT', body :{new_text}}),
+    remove : (id) => apiRequest(`/files/${id}` , { method : 'DELETE'}), 
 }

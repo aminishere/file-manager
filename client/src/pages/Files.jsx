@@ -15,7 +15,7 @@ const Files = () => {
         try {
             setError('')
             const data =await filesApi.list()
-            setFiles(data)
+            setItems(data)
         } catch (error) {
             setError('Failed to load files')      
         }
@@ -46,7 +46,7 @@ const Files = () => {
 
    //tag update 
   const handleUpdate = async (id) => {
-    const newText = 'Tag: ';
+    const newText = prompt('New text:');
     if(newText==null)return;
     try {
         await filesApi.updateText(id, newText)
