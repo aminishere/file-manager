@@ -28,3 +28,15 @@ export async function apiRequest(path, {method = 'GET', body , isForm=false}= {}
     return response.text();
 
 }
+
+
+//object
+export const authApi = {
+    signup : (data) =>apiRequest('/signup', {method : ' POST' , body : data}),
+    logout : () => localStorage.removeItem('token'),
+    login : async (data) => {
+        const res= await apiRequest('login', {method : 'POST', body: data});
+        if(res?.access_token) localStorage.setItem('token', res.access_token);
+        return res;
+    }
+};
