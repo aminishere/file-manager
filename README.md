@@ -4,7 +4,7 @@ A full-stack web application for managing and storing files in the cloud. Built 
 
 ## Features
 
-- **User Authentication**: Secure user registration and login system
+- **User Authentication**: Secure user registration and login system ( jwt)
 - **Cloud Storage**: Store and manage files in the cloud with the user customized tag attached.
 - **Protected Routes**: Secure access to application features
 - **File Management**: Upload, download, and organize files
@@ -72,7 +72,13 @@ cd ../client
 npm install
 npm run dev
 ```
-#### Testing application
 
-login credentials : email : test2@gmail.com
-                    password : test2
+### testing credentials
+
+Use the following demo credentials:
+
+```txt
+Email:    test2@gmail.com
+Password: test2
+
+
