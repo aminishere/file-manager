@@ -72,4 +72,7 @@ cd ../client
 npm install
 npm run dev
 ```
+#### Testing application
 
+login credentials : email : test2@gmail.com
+                    password : test2
