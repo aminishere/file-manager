@@ -24,8 +24,32 @@ A full-stack web application for managing and storing files in the cloud. Built 
 ### Database
  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" width="40" height="40" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" width="40" height="40" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" width="40" height="40" />
           
-          
-          
+
+### Project Structure
+
+File Manager/  
+│
+├── backend/  
+│ ├── auth.py  
+│ ├── database.py  
+│ ├── main.py  
+│ ├── models.py  
+│ ├── requirements.txt  
+│ ├── routers/  
+│ ├── schemas.py  
+│ ├── security.py  
+│ └── supabase_files.py  
+│
+└── client/  
+├── README.md  
+├── eslint.config.js  
+├── index.html  
+├── node_modules/  
+├── package-lock.json  
+├── package.json  
+├── public/  
+├── src/  
+└── vite.config.js  
 
 
 ### Setup Instructions
