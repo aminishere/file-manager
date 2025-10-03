@@ -76,8 +76,14 @@ npm run dev
 
 Use the following demo credentials:
 
+
 ```txt
 Email:    test2@gmail.com
 Password: test2
+
+
+(pls have patience while its loading (render server gets down after a while)) 
+```
+
 
 
