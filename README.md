@@ -40,16 +40,16 @@ File Manager/
 │ ├── security.py  
 │ └── supabase_files.py  
 │
-└── client/  
-├── README.md  
-├── eslint.config.js  
-├── index.html  
-├── node_modules/  
-├── package-lock.json  
-├── package.json  
-├── public/  
-├── src/  
-└── vite.config.js  
+└───client/  
+  ├── README.md  
+  ├── eslint.config.js  
+  ├── index.html  
+  ├── node_modules/  
+  ├── package-lock.json  
+  ├── package.json  
+  ├── public/  
+  ├── src/  
+  └── vite.config.js  
 
 
 ### Setup Instructions
