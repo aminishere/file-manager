@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8000';
+//const API_BASE = 'http://localhost:8000';
+const API_BASE = 'https://file-manager-xb1j.onrender.com';
 function getToken(){
     return localStorage.getItem('token');
 }
