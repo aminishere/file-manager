@@ -13,24 +13,39 @@ A full-stack web application for managing and storing files in the cloud. Built 
 ## Tech Stack
 
 ### Frontend
-
+ <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width="40" height="40" />  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"  width="40" height="40" />
+          
+          
 
 ### Backend
-- **Supabase** - Backend-as-a-Service (Database, Auth, Storage)
-- **PostgreSQL** - Database (via Supabase)
-- **FastAPI** - Backend Framework
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" width="40" height="40"  /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlalchemy/sqlalchemy-original.svg" width="40" height="40" />
+          
 
-## 📦 Installation
+### Database
+ <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" width="40" height="40" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" width="40" height="40" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" width="40" height="40" />
+          
+          
+          
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Supabase account
 
 ### Setup Instructions
 
 ```bash
 # example
-git clone ...
-cd project
+git clone https://github.com/aminishere/file-manager
+cd file-manager
+```
+#### backend
+
+```bash
+cd backend
 pip install -r requirements.txt
+uvicorn main:app --reload
+```
+#### frontend
+```bash
+cd ../client
+npm install
+npm run dev
+```
+
