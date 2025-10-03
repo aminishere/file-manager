@@ -55,7 +55,6 @@ File Manager/
 ### Setup Instructions
 
 ```bash
-# example
 git clone https://github.com/aminishere/file-manager
 cd file-manager
 ```
