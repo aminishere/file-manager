@@ -19,7 +19,7 @@ app.add_middleware(
 
 init_db()
 
-# Include routers to keep main minimal
+# all routers
 app.include_router(auth_router)
 app.include_router(files_router)
 app.include_router(files_crud_router)
