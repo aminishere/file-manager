@@ -18,30 +18,27 @@ A full-stack web application for managing and storing files in the cloud. Built 
 
 ### Project Structure
 
-File Manager/  
+File-Manager/  
 │
+├── client/  
+│   ├── src/  
+│   ├── public/  
+│   ├── index.html  
+│   ├── package.json  
+│   ├── package-lock.json  
+│   ├── eslint.config.js  
+│   └── vite.config.js  
 ├── backend/  
-│ ├── auth.py  
-│ ├── database.py  
-│ ├── main.py  
-│ ├── models.py  
-│ ├── requirements.txt  
-│ ├── routers/  
-│ ├── schemas.py  
-│ ├── security.py  
-│ └── supabase_files.py  
-│
-└───client/  
-  ├── README.md  
-  ├── eslint.config.js  
-  ├── index.html  
-  ├── node_modules/  
-  ├── package-lock.json  
-  ├── package.json  
-  ├── public/  
-  ├── src/  
-  └── vite.config.js  
-
+│   ├── main.py  
+│   ├── auth.py  
+│   ├── database.py  
+│   ├── models.py  
+│   ├── schemas.py  
+│   ├── security.py  
+│   ├── supabase_files.py  
+│   ├── routers/  
+│   └── requirements.txt  
+└── README.md  
 
 ### Setup Instructions
 
