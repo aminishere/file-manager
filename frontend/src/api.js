@@ -12,7 +12,7 @@ export async function apiRequest(path, { method = 'GET', body, isForm = false } 
   }
   const token = getToken();
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers['Authorization'] = `Bearer ${token}`; // this is where w/o Bearer prefix it was working in postman, but not in client, so i put Bearer"
   }
 
   const response = await fetch(`${API_BASE}${path}`, {
